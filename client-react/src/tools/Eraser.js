@@ -1,6 +1,6 @@
-import Tool from './Tool'
+import Brush from './Tool'
 
-export default class Eraser extends Tool {
+export default class Eraser extends Brush {
     constructor(canvas) {
         super(canvas);
         this.listen();
@@ -34,11 +34,9 @@ export default class Eraser extends Tool {
     }
 
     draw(x, y) {
-
-        this.ctx.beginPath()
-        this.ctx.rect(x - (this.eraserWidth / 2), y - (this.eraserWidth / 2), this.eraserWidth, this.eraserWidth)
-        this.ctx.fillStyle = "#FFFFFF";
-        this.ctx.fill()
-        this.ctx.fillStyle = "#000000";
+        this.ctx.strokeStyle = "white"
+        this.ctx.lineWidth = this.eraserWidth
+        this.ctx.lineTo(x, y)
+        this.ctx.stroke()
     }
 }

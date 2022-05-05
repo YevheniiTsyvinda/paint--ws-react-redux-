@@ -8,9 +8,18 @@ export const  toolSlice = createSlice({
     reducers:{
         setTool: (state,action)=>{
             state.tool = action.payload;
-        }
+        },
+        setFillColor:(state,action)=>{
+            state.tool.fillColor = action.payload;
+        },
+        setStrokeColor:(state,action)=>{
+            state.tool.strokeColor = action.payload;
+        },
+        setLineWidth:(state,action)=>{
+            state.tool.lineWidth = action.payload;
+        },
     }
 })
 
-export const {setTool} = toolSlice.actions;
+export const {setTool, setFillColor, setStrokeColor, setLineWidth} = toolSlice.actions;
 export default toolSlice.reducer;

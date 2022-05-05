@@ -1,6 +1,6 @@
 import React,{useRef,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux';
-import { setCanvas } from '../store/reducers/canvasReducer';
+import { setCanvas,setToUndoList } from '../store/reducers/canvasReducer';
 import { setTool } from '../store/reducers/toolReducer';
 import Brush from '../tools/Brush';
 
@@ -14,6 +14,10 @@ const Canvas = () => {
         dispatch(setCanvas(canvasRef.current));
         dispatch(setTool(new Brush(canvasRef.current)))
     },[])
+
+    const mouseDownHandler = ()=>{
+        dispatch(setToUndoList(canvasRef.current))
+    }
 
   return (
     <div className='canvas'>
