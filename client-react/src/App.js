@@ -3,13 +3,23 @@ import Canvas from "./components/Canvas";
 import SettingBar from "./components/SettingBar";
 import Toolbar from "./components/Toolbar";
 import './styles/app.scss';
+import { Routes, Route, Navigate } from 'react-router-dom'
+
 
 function App() {
     return (
         <div className="App">
-            <Toolbar />
-            <SettingBar />
-            <Canvas />
+            <Routes>
+                <Route path='/:id'
+                    element={<>
+                        <Toolbar />
+                        <SettingBar />
+                        <Canvas />
+                    </>}
+                />
+                <Route path="*" 
+                element={<Navigate to={`f${(+new Date).toString(16)}`}></Navigate>} />
+            </Routes>
         </div>
     );
 }

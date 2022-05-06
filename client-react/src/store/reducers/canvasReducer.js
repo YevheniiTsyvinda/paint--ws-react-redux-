@@ -5,7 +5,7 @@ export const  canvasSlice = createSlice({
     initialState:{
         canvas: null,
         undoList: [],
-        redoList:[]
+        redoList:[],
     },
     reducers:{
         setCanvas: (state,action)=>{
@@ -15,18 +15,18 @@ export const  canvasSlice = createSlice({
             state.undoList.push(action.payload);
         },
         setToRedoList: (state,action)=>{
-            state.RedoList.push(action.payload);
+            state.redoList.push(action.payload);
         },
         undo:(state)=>{
             let ctx = state.canvas.getContext('2d');
             if(state.undoList.length){
                 let dataUrl = state.undoList.pop();
-                state.redoList.push(state.canvas.ToDataUrl());
+                state.redoList.push(state.canvas.toDataURL());
                 let img = new Image();
                 img.src = dataUrl;
-                img.onload = async ()=>{
-                    ctx.clearRect(0,0,state.canvas.width,state.canvas.height);
-                    ctx.drawImage(img,0,0, state.canvas.width,state.canvas.height)
+                img.onload = () => {
+                    ctx.clearRect(0,0, state.canvas.width, state.canvas.height)
+                    ctx.drawImage(img, 0, 0, state.canvas.width, state.canvas.height)
                 }
             }else{
                 ctx.clearRect(0,0,state.canvas.width,state.canvas.height);
@@ -36,10 +36,10 @@ export const  canvasSlice = createSlice({
             let ctx = state.canvas.getContext('2d');
             if(state.redoList.length){
                 let dataUrl = state.redoList.pop();
-                state.undoList.push(state.canvas.ToDataUrl());
+                state.undoList.push(state.canvas.toDataURL());
                 let img = new Image();
                 img.src = dataUrl;
-                img.onload = async ()=>{
+                img.onload = ()=>{
                     ctx.clearRect(0,0,state.canvas.width,state.canvas.height);
                     ctx.drawImage(img,0,0, state.canvas.width,state.canvas.height)
                 }

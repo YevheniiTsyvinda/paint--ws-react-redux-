@@ -23,29 +23,39 @@ import Eraser from '../tools/Eraser';
 
 const Toolbar = () => {
     const canvas = useSelector(state => state.canvas.canvas);
+    const sessionState = useSelector(state => state.session);
     const dispatch = useDispatch();
 
     const changeColor = e =>{
         dispatch(setFillColor(e.target.value));
         dispatch(setStrokeColor(e.target.value));
     }
-
+    const download = () => {
+        const dataUrl = canvasState.canvas.toDataURL()
+        console.log(dataUrl)
+        const a = document.createElement('a')
+        a.href = dataUrl
+        a.download = canvasState.sessionid + ".jpg"
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+    }
   return (
     <div className='toolbar'>
         <BsFillBrushFill className='toolbar__btn'
-            onClick={()=>{ dispatch(setTool(new Brush(canvas)))}}
+            onClick={()=>{ dispatch(setTool(new Brush(canvas,sessionState.socket,sessionState.id)))}}
         />
         <BiRectangle className='toolbar__btn'
-            onClick={()=>{dispatch(setTool(new Rect(canvas)))}}
+            onClick={()=>{dispatch(setTool(new Rect(canvas,sessionState.socket,sessionState.id)))}}
         />
         <BsCircle className='toolbar__btn'
-            onClick={()=>{dispatch(setTool(new Circle(canvas)))}}
+            onClick={()=>{dispatch(setTool(new Circle(canvas,sessionState.socket,sessionState.id)))}}
         />
         <BsEraserFill className='toolbar__btn'
-            onClick={()=>{dispatch(setTool(new Eraser(canvas)))}}
+            onClick={()=>{dispatch(setTool(new Eraser(canvas,sessionState.socket,sessionState.id)))}}
         />
         <div className='toolbar__btn line'
-            onClick={()=>{dispatch(setTool(new Line(canvas)))}}
+            onClick={()=>{dispatch(setTool(new Line(canvas,sessionState.socket,sessionState.id)))}}
         ></div>
         <input type="color"
             onChange={(e)=> changeColor(e)}
@@ -57,7 +67,7 @@ const Toolbar = () => {
         <BiRedo
             onClick={e => dispatch(redo())}
         className='toolbar__btn'/>
-        <BiSave className='toolbar__btn'/>
+        <BiSave className='toolbar__btn' onClick={()=>download()}/>
     </div>
   )
 }

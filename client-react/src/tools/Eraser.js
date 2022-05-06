@@ -1,8 +1,8 @@
 import Brush from './Tool'
 
 export default class Eraser extends Brush {
-    constructor(canvas) {
-        super(canvas);
+    constructor(canvas,socket,id) {
+        super(canvas,socket,id);
         this.listen();
         this.eraserWidth = 10;
     }
